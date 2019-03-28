@@ -1,6 +1,6 @@
 const express = require('express');
 var router = express.Router();
-var AccountHistory = require('../mongoDb/account-history');
+var AccountHistory = require('../mongoDb/models/account-history');
 const { check, validationResult } = require('express-validator/check');
 var CreditCard = require ('./credit-card');
 
@@ -9,7 +9,7 @@ router.get('/',
         check('email').isEmail().withMessage('E-mail must be valid')
     ],
     async (req, res, next) => {
-        console.log('Accessing GET account history controller')
+        console.log('Accessing GET account history controller');
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

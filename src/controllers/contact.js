@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
-var Contact = require('../mongoDb/contact');
-var Account = require('../mongoDb/account');
+var Contact = require('../mongoDb/models/contact');
+var Account = require('../mongoDb/models/account');
 const { check, validationResult } = require('express-validator/check');
 
 router.get('/', 

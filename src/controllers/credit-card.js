@@ -1,6 +1,6 @@
 const express = require('express');
 var router = express.Router();
-var CreditCard = require('../mongoDb/credit-card');
+var CreditCard = require('../mongoDb/models/credit-card');
 const { check, validationResult } = require('express-validator/check');
 
 router.get('/', 

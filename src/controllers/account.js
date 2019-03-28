@@ -1,48 +1,72 @@
 const express = require('express');
 var router = express.Router();
-var Account = require('../mongoDb/account');
+var Account5 = require('../mongoDb/models/account');
+var novo2 = require('../interfaces/iAccount');
 const { check, validationResult } = require('express-validator/check');
+const { validateRequest } = require('../request-handler');
 
 router.get('/', 
-        [
-            check('email').isEmail().withMessage('E-mail must be valid'),
-            check('password').isLength({ min:3 }).withMessage('Password must be informed')
-        ],
-        async (req, res, next) => {
-        console.log('Accessing GET account controller');
+    [
+        check('email').isEmail().withMessage('E-mail must be valid'),
+        check('password').isLength({ min:3 }).withMessage('Password must be informed')
+    ],
+    async (req, res, next) => {
+        console.log('Accessing GET account controller ' + global.config.databaseLocation);
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.status(422);
-            next(errors.array());
-        }
+        // await validateRequest(req, res, next);
+        novo2.authenticate(req, res, next);
 
-        Account.findOne({ 'email' : req.query.email }, (err, account) => {
-            try {
-                if (err) {
-                    console.log(err);
-                    next(err);
-                }
+        // Account5.find((err, accounts) => {
+        //     if (err) 
+        //         return console.error(err);
             
-                if (account.password === req.query.password) {
-                    res.send(account);
-                } else {
-                    res.status(401);
-                    next('Password is incorrect');
-                }
-            } catch (error) {
-                res.status(400);
-                next(error);
-            }
+        //     res.send(accounts);
+        // })
+
+    }
+);
+
+// BACKUP DO CÓDIGO DO GET
+// router.get('/', 
+//         [
+//             check('email').isEmail().withMessage('E-mail must be valid'),
+//             check('password').isLength({ min:3 }).withMessage('Password must be informed')
+//         ],
+//         async (req, res, next) => {
+//         console.log('Accessing GET account controller');
+
+//         const errors = validationResult(req);
+//         if (!errors.isEmpty()) {
+//             res.status(422);
+//             next(errors.array());
+//         }
+
+//         Account.findOne({ 'email' : req.query.email }, (err, account) => {
+//             try {
+//                 if (err) {
+//                     console.log(err);
+//                     next(err);
+//                 }
             
-        });
-});
+//                 if (account.password === req.query.password) {
+//                     res.send(account);
+//                 } else {
+//                     res.status(401);
+//                     next('Password is incorrect');
+//                 }
+//             } catch (error) {
+//                 res.status(400);
+//                 next(error);
+//             }
+            
+//         });
+// });
 
 router.get('/getAll', async (req, res, next) => {
     try {
-        console.log('Accessing GET account controller');
+        console.log('Accessing GET ALL account controller');
 
-        Account.find((err, accounts) => {
+        Account5.find((err, accounts) => {
             if (err) 
                 return console.error(err);
             
@@ -75,7 +99,7 @@ router.post('/',
                 res.status(422);
                 next(errors.array());
             } else {
-                Account.findOne({ 'email' : req.body.email }, (err, account) => {
+                Account5.findOne({ 'email' : req.body.email }, (err, account) => {
                     if (err) {
                         console.log(err);
                         next(err);
@@ -84,7 +108,7 @@ router.post('/',
                         res.status(400);
                         next("E-mail already exist");
                     } else {
-                        var newAcc = new Account({
+                        var newAcc = new Account5({
                             name: req.body.name,
                             email: req.body.email,
                             password: req.body.password
@@ -116,7 +140,7 @@ router.put('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     try {
         console.log('Accessing DELETE account controller');
-        Account.deleteOne({email: 'adsnb.alan@gmail.com' }, (err) => { 
+        Account5.deleteOne({email: 'adsnb.alan@gmail.com' }, (err) => { 
             if (err) 
                 return console.error(err); 
         });

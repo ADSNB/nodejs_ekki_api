@@ -1,15 +1,16 @@
 {
     "development": {
-        "config_id": "development",
-        "app_name": "my app",
-        "app_desc": "my app desc",
-        "node_port": 3000,
-        "json_indentation": 4,
-        "database": "my-app-db-dev"
+        "location" : "../resolveRepositoryBase",
+        "database" : "mongoDb",
+        "mongoDbConnection": "mongodb://localhost/HelloMongoose",
+        "databaseLocation" : "ola",
+        "db" : "./mongoDb/repository/account",
+        "db2" : "./db2",
+        "node_port": 3000
     },
     "production": {
-        "config_id": "production",
-        "node_port": 8080,
-        "database": "my-app-db-prod"
+        "mongoDbConnection": "mongodb://adsnb:Master123456@ds213705.mlab.com:13705/heroku_n5q86cgw",
+        "databaseLocation" : "../mongoDb",
+        "node_port": 3000
     }
 }
