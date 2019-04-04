@@ -9,7 +9,7 @@
         "node_port": 3000
     },
     "production": {
-        "mongoDbConnection": "mongodb://adsnb:Master123456@ds213705.mlab.com:13705/heroku_n5q86cgw",
+        "mongoDbConnection": "mongodb://adsnb:master9@ds213705.mlab.com:13705/heroku_n5q86cgw",
         "databaseLocation" : "../mongoDb",
         "node_port": 3000
     }

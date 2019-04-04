@@ -5,62 +5,62 @@ var novo2 = require('../interfaces/iAccount');
 const { check, validationResult } = require('express-validator/check');
 const { validateRequest } = require('../request-handler');
 
-router.get('/', 
-    [
-        check('email').isEmail().withMessage('E-mail must be valid'),
-        check('password').isLength({ min:3 }).withMessage('Password must be informed')
-    ],
-    async (req, res, next) => {
-        console.log('Accessing GET account controller ' + global.config.databaseLocation);
+// router.get('/', 
+//     [
+//         check('email').isEmail().withMessage('E-mail must be valid'),
+//         check('password').isLength({ min:3 }).withMessage('Password must be informed')
+//     ],
+//     async (req, res, next) => {
+//         console.log('Accessing GET account controller ' + global.config.databaseLocation);
 
-        // await validateRequest(req, res, next);
-        novo2.authenticate(req, res, next);
+//         // await validateRequest(req, res, next);
+//         novo2.authenticate(req, res, next);
 
-        // Account5.find((err, accounts) => {
-        //     if (err) 
-        //         return console.error(err);
+//         // Account5.find((err, accounts) => {
+//         //     if (err) 
+//         //         return console.error(err);
             
-        //     res.send(accounts);
-        // })
+//         //     res.send(accounts);
+//         // })
 
-    }
-);
+//     }
+// );
 
 // BACKUP DO CÓDIGO DO GET
-// router.get('/', 
-//         [
-//             check('email').isEmail().withMessage('E-mail must be valid'),
-//             check('password').isLength({ min:3 }).withMessage('Password must be informed')
-//         ],
-//         async (req, res, next) => {
-//         console.log('Accessing GET account controller');
+router.get('/', 
+        [
+            check('email').isEmail().withMessage('E-mail must be valid'),
+            check('password').isLength({ min:3 }).withMessage('Password must be informed')
+        ],
+        async (req, res, next) => {
+        console.log('Accessing GET account controller');
 
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//             res.status(422);
-//             next(errors.array());
-//         }
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.status(422);
+            next(errors.array());
+        }
 
-//         Account.findOne({ 'email' : req.query.email }, (err, account) => {
-//             try {
-//                 if (err) {
-//                     console.log(err);
-//                     next(err);
-//                 }
+        Account5.findOne({ 'email' : req.query.email }, (err, account) => {
+            try {
+                if (err) {
+                    console.log(err);
+                    next(err);
+                }
             
-//                 if (account.password === req.query.password) {
-//                     res.send(account);
-//                 } else {
-//                     res.status(401);
-//                     next('Password is incorrect');
-//                 }
-//             } catch (error) {
-//                 res.status(400);
-//                 next(error);
-//             }
+                if (account.password === req.query.password) {
+                    res.send(account);
+                } else {
+                    res.status(401);
+                    next('Password is incorrect');
+                }
+            } catch (error) {
+                res.status(400);
+                next(error);
+            }
             
-//         });
-// });
+        });
+});
 
 router.get('/getAll', async (req, res, next) => {
     try {
