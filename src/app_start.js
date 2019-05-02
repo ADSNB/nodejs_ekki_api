@@ -8,7 +8,7 @@ const db = require('./mongoDb/mongoDb');
 const requestHandler = require('./request-handler');
 
 // get app configuration
-global.config = config.production;
+global.config = config.development;
 
 // activate CORS (cross origin resource sharing)
 app.use(cors());
